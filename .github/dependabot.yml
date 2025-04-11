@@ -4,3 +4,18 @@ updates:
     directory: '/'
     schedule:
       interval: weekly
+
+  - package-ecosystem: docker
+    directory: /.devcontainer
+    schedule:
+      interval: daily
+
+  - package-ecosystem: docker
+    directory: /Packaging/amiga
+    schedule:
+      interval: daily
+
+  - package-ecosystem: pip
+    directory: /tools/segmenter
+    schedule:
+      interval: daily

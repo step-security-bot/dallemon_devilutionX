@@ -17,8 +17,13 @@ jobs:
   tidy-check:
     runs-on: ubuntu-latest
     steps:
+    - name: Harden the runner (Audit all outbound calls)
+      uses: step-security/harden-runner@c6295a65d1254861815972266d5933fd6e532bdf # v2.11.1
+      with:
+        egress-policy: audit
+
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       with:
         fetch-depth: 0
 
@@ -31,7 +36,7 @@ jobs:
       run: cmake -S. -Bbuild
 
     - name: clang-tidy Check
-      uses: cpp-linter/cpp-linter-action@v2
+      uses: cpp-linter/cpp-linter-action@8ae6cfaea8cc035c6155b5fe79d7991a9bf638af # v2.14.0
       id: linter
       with:
         database: build # directory containing compile_commands.json
