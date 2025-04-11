@@ -21,19 +21,24 @@ jobs:
   formatting-check:
     runs-on: ubuntu-latest
     steps:
+    - name: Harden the runner (Audit all outbound calls)
+      uses: step-security/harden-runner@c6295a65d1254861815972266d5933fd6e532bdf # v2.11.1
+      with:
+        egress-policy: audit
+
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       with:
         fetch-depth: 0
 
     - name: Formatting Check (Source)
-      uses: jidicula/clang-format-action@v4.15.0
+      uses: jidicula/clang-format-action@4726374d1aa3c6aecf132e5197e498979588ebc8 # v4.15.0
       with:
         clang-format-version: '18'
         check-path: 'Source'
 
     - name: Formatting Check (test)
-      uses: jidicula/clang-format-action@v4.15.0
+      uses: jidicula/clang-format-action@4726374d1aa3c6aecf132e5197e498979588ebc8 # v4.15.0
       with:
         clang-format-version: '18'
         check-path: 'test'

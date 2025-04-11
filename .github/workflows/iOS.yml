@@ -31,12 +31,17 @@ jobs:
     runs-on: macos-13
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Harden the runner (Audit all outbound calls)
+      uses: step-security/harden-runner@c6295a65d1254861815972266d5933fd6e532bdf # v2.11.1
+      with:
+        egress-policy: audit
+
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       with:
         fetch-depth: 0
 
     - name: Cache CMake build folder
-      uses: actions/cache@v4
+      uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
       with:
         path: build
         key: ${{ github.workflow }}-v4-${{ github.sha }}
@@ -61,14 +66,14 @@ jobs:
 
     - name: Upload-Package
       if: ${{ !env.ACT }}
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
       with:
         name: devilutionx-iOS.ipa
         path: build/devilutionx-iOS.ipa
 
     - name: Update Release
       if: ${{ github.event_name == 'release' && !env.ACT }}
-      uses: svenstaro/upload-release-action@v2
+      uses: svenstaro/upload-release-action@04733e069f2d7f7f0b4aebc4fbdbce8613b03ccd # v2
       with:
         file: build/devilutionx-iOS.ipa
         overwrite: true
